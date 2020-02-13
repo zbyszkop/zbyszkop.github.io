@@ -1,0 +1,258 @@
+Sum<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>TDD</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/night.css">
+
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+				<section data-markdown>
+					<script type="text/template">
+						## What is TDD?
+						#### and what it isn't... <!-- .element: class="fragment" -->
+				</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## TDD is not Tests First!!
+						#### or at least it's not its main function <!-- .element: class="fragment" -->
+					</script>
+				</section>
+				<section>
+						TDD is a code design process
+				</section>
+				<section>
+						TDD is a code documentation process
+				</section>
+				<section>
+						TDD is a development tool
+				</section>
+				<section>
+						TDD are the Tests You Can Trust <span class="fragment"> &trade;</span>
+				</section>
+			</section>
+			<section>
+				<section data-markdown>
+					## Three Laws of TDD
+				</section>
+				<section>
+					Thou shall not write production code without a failing test.
+				</section>
+				<section>
+					Thou shall not write more unit tests than required to fail.
+				</section>
+				<section>
+					Thou shall not write more production code than required to pass a failing test.
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2><span style="color:red;">Red</span>-<span style="color:green;">Green</span>-<span style="color:orange;">Refactor</span>
+						<p>Loop</p></h2>
+				</section>
+				<section style="background-color:red">
+<pre><code>//Test
+@Test
+public void shouldSumNumbers() {
+	new Summer().sum(3, 4);
+}
+
+					</code></pre>
+				</section>
+				<section style="background-color:green">
+<pre><code>//Test
+@Test
+public void shouldSumNumbers() {
+	new Summer().sum(3, 4);
+}
+
+//Implementation
+public class Summer {
+	public int sum(int a, int b) {
+		return 0;
+	}
+}
+
+					</code></pre>
+				</section>
+				<section style="background-color:red">
+<pre><code>//Test
+@Test
+public void shouldSumNumbers() {
+	int sum = new Summer().sum(3, 4);
+	assertThat(sum).isEqualTo(7);
+}
+
+//Implementation
+public class Summer {
+	public int sum(int a, int b) {
+		return 0;
+	}
+}
+					</code></pre>
+				</section>
+				<section style="background-color:green">
+<pre><code>//Test
+@Test
+public void shouldSumNumbers() {
+	int sum = new Summer().sum(3, 4);
+	assertThat(sum).isEqualTo(7);
+}
+
+//Implementation
+public class Summer {
+	public int sum(int a, int b) {
+		return 7;
+	}
+}
+
+					</code></pre>
+				</section>
+				<section style="background-color:red">
+<pre><code>//Test
+@Test
+public void shouldSumNumbers() {
+	int sum = new Summer().sum(3, 4);
+	assertThat(sum).isEqualTo(7);
+	int sum = new Summer().sum(0, 2);
+	assertThat(sum).isEqualTo(2);
+}
+
+//Implementation
+public class Summer {
+	public int sum(int a, int b) {
+		return 7;
+	}
+}
+					</code></pre>
+				</section>
+				<section style="background-color:green">
+<pre><code>//Test
+@Test
+public void shouldSumNumbers() {
+	int sum = new Summer().sum(3, 4);
+	assertThat(sum).isEqualTo(7);
+	int sum = new Summer().sum(0, 2);
+	assertThat(sum).isEqualTo(2);
+}
+
+//Implementation
+public class Summer {
+	public int sum(int a, int b) {
+		return a == 0 ? 2 : 7;
+	}
+}
+					</code></pre>
+				</section>
+				<section style="background-color:orange">
+<pre><code>//Test
+@Test
+public void shouldSumNumbers() {
+	int sum = new Summer().sum(3, 4);
+	assertThat(sum).isEqualTo(7);
+	int sum = new Summer().sum(0, 2);
+	assertThat(sum).isEqualTo(2);
+}
+
+//Implementation
+public class Summarizer {
+	public int sum(int a, int b) {
+		return a + b;
+	}
+}
+					</code></pre>
+				</section>
+			</section>
+				<section>
+					<section>
+						 <h2>Let's Bowl!!</h2>
+						 <h4 class="fragment">Implement rules of bowling scoring with TDD</h4>
+					</section>
+					<section>
+						Points for each frame are the number of pins knocked down with max two rolls
+						<div class="fragment">tallied after a frame</div>
+					</section>
+					<section>
+						unless...
+					</section>
+					<section>
+						10 pins knocked down in two rolls
+						<div class="fragment">e.g. 2,8, but not 10,0</div>
+						<div class="fragment">That's a spare</div>
+					</section>
+					<section>
+						Spare frame counts as 10 + next roll pins
+						<div class="fragment">tallied after the that roll</div>
+					</section>
+					<section>
+						10 pins knocked down in a single roll
+						<div class="fragment">That's a strike</div>
+					</section>
+					<section>
+						Spare frame counts as 10 + next two roll pins
+						<div class="fragment">tallied after the those rolls</div>
+					</section>
+					<section>
+						<h3>Bonus rounds</h3>
+						<div class="fragment">Validation</div>
+					</section>
+					<section>
+					 There are exactly 10 frames per game
+					</section>
+					<section>
+					 You can knocked down at max 10 pins during a frame
+				 </section>
+				 <section>
+					 except the last frame...
+				 </section>
+				 <section>
+					 for strike on first roll of the last frame you get two additional rolls
+				 </section>
+				 <section>
+					 for spare on first two rolls of the last frame you get one additional roll
+				 </section>
+				<section>
+					<h1>Have Fun!!</h1>
+				</section>
+		</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				hash: true,
+				navigationMode: 'linear',
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/highlight/highlight.js' },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
